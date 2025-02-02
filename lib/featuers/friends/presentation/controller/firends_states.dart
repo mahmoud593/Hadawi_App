@@ -1,3 +1,5 @@
+import 'package:hadawi_app/featuers/occasions/domain/entities/occastion_entity.dart';
+
 abstract class FriendsStates{}
 
 class FriendsInitialState extends FriendsStates{}
@@ -35,4 +37,13 @@ class GetFollowersSuccessState extends FriendsStates{}
 class GetFollowersErrorState extends FriendsStates{
   String message;
   GetFollowersErrorState({required this.message});
+}
+class GetUserOccasionsLoadingState extends FriendsStates{}
+class GetUserOccasionsSuccessState extends FriendsStates{
+  List<OccasionEntity> userOccasions;
+  GetUserOccasionsSuccessState({required this.userOccasions});
+}
+class GetUserOccasionsErrorState extends FriendsStates{
+  String message;
+  GetUserOccasionsErrorState({required this.message});
 }

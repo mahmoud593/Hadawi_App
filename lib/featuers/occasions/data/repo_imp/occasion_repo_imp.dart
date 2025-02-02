@@ -7,8 +7,7 @@ import 'package:hadawi_app/utiles/error_handling/faliure/faliure.dart';
 class OccasionRepoImp extends OccasionRepo {
   @override
   Future<Either<Faliure, OccasionEntity>> addOccasions(
-      {
-      required bool isForMe,
+      {required bool isForMe,
       required String occasionName,
       required String occasionDate,
       required String occasionType,
@@ -22,24 +21,23 @@ class OccasionRepoImp extends OccasionRepo {
       required String giftLink,
       required int giftPrice,
       required String giftType,
-      required bool isSharing
-      }) async {
+      required bool isSharing}) async {
     final result = await OccasionDataSource().addOccasion(
-        isForMe: isForMe,
-        occasionName: occasionName,
-        occasionDate: occasionDate,
-        occasionType: occasionType,
-        moneyGiftAmount: moneyGiftAmount,
-        personId: personId,
-        personName: personName,
-        personPhone: personPhone,
-        personEmail: personEmail,
-        giftImage: giftImage,
-        giftName: giftName,
-        giftLink: giftLink,
-        giftPrice: giftPrice,
-        giftType: giftType,
-        isSharing: isSharing,
+      isForMe: isForMe,
+      occasionName: occasionName,
+      occasionDate: occasionDate,
+      occasionType: occasionType,
+      moneyGiftAmount: moneyGiftAmount,
+      personId: personId,
+      personName: personName,
+      personPhone: personPhone,
+      personEmail: personEmail,
+      giftImage: giftImage,
+      giftName: giftName,
+      giftLink: giftLink,
+      giftPrice: giftPrice,
+      giftType: giftType,
+      isSharing: isSharing,
     );
     try {
       return Right(result);
@@ -51,6 +49,17 @@ class OccasionRepoImp extends OccasionRepo {
   @override
   Future<Either<Faliure, List<OccasionEntity>>> getOccasions() async {
     final result = await OccasionDataSource().getAllOccasions();
+    try {
+      return Right(result);
+    } on Exception catch (e) {
+      return Left(Faliure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Faliure, List<OccasionEntity>>> getUserOccasions(
+      {required String userId}) async{
+    final result = await OccasionDataSource().getUserOccasions(userId: userId);
     try {
       return Right(result);
     } on Exception catch (e) {

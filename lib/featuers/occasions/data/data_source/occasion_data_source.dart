@@ -59,10 +59,39 @@ class OccasionDataSource {
     );
 
     try {
-      await docRef.set(occasionModel.toJson());
+      await docRef.set(occasionModel.toJson()).then(
+        (value) {
+          fireStore
+              .collection('users')
+              .doc(personId)
+              .collection('My Occasions')
+              .doc(occasionId)
+              .set(
+                occasionModel.toJson(),
+              );
+        },
+      );
       return occasionModel;
     } on FireStoreException catch (e) {
       throw FireStoreException(firebaseException: e.firebaseException);
+    }
+  }
+
+  Future<List<OccasionModel>> getUserOccasions({required String userId}) async {
+    try {
+      final querySnapshot = await fireStore
+          .collection('users')
+          .doc(userId)
+          .collection('My Occasions')
+          .get();
+
+      final occasions = querySnapshot.docs
+          .map((doc) => OccasionModel.fromJson(doc.data()))
+          .toList();
+
+      return occasions;
+    } catch (e) {
+      throw Exception("Failed to fetch users occasions: $e");
     }
   }
 }

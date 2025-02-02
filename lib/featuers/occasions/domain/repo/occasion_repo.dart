@@ -23,4 +23,6 @@ abstract class OccasionRepo {
       required String giftType,
       required bool isSharing
       });
+  Future<Either<Faliure, List<OccasionEntity>>> getUserOccasions({required String userId});
+
 }
